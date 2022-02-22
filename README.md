@@ -64,3 +64,12 @@ Then magnetometer registers can be read from MPU9250 address space. No FIFO invo
 debugging strange magnetometer values. Put IMU on a "stick". The picture shows BNO055 connected to ESP32 through
 breadboard.
 
+# Interesting facts
+
+I bought nine MPU-9250 in total. Two from local shop, and seven from aliexpress. Sensors from local shop were fine.
+Some of Aliexpress' sensors had some problems:
+
+* Four chips was good
+* One sensor was MPU-9255 (whoami value 0x73). That is fine. Totally usable.
+* One had broken accelerometer. Z value was stuck
+* One had broken or absent megnetometer. Chip was marked MP92M. This is different from all other sensors that was marked just MP92
