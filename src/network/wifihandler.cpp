@@ -59,12 +59,21 @@ IPAddress WiFiNetwork::getAddress() {
 }
 
 void WiFiNetwork::setUp() {
+    WiFi.setPhyMode(WIFI_PHY_MODE_11B);
+    
     Serial.println("[NOTICE] WiFi: Setting up WiFi");
     WiFi.persistent(true);
     WiFi.mode(WIFI_STA);
     WiFi.hostname("SlimeVR FBT Tracker");
     Serial.printf("[NOTICE] WiFi: Loaded credentials for SSID %s and pass length %d\n", WiFi.SSID().c_str(), WiFi.psk().length());
     wl_status_t status = WiFi.begin(); // Should connect to last used access point, see https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/station-class.html#begin
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        delay(100);
+    }
+
+
     Serial.printf("[NOTICE] Status: %d", status);
     wifiState = 1;
     wifiConnectionTimeout = millis();

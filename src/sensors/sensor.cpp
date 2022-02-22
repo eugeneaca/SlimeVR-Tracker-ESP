@@ -30,7 +30,7 @@ void Sensor::setupSensor(uint8_t expectedSensorType, uint8_t sensorId, uint8_t a
     this->addr = addr;
     this->intPin = intPin;
     this->sensorId = sensorId;
-    this->sensorOffset = {Quat(Vector3(0, 0, 1), sensorId == 0 ? IMU_ROTATION : SECOND_IMU_ROTATION)};
+    this->sensorOffset = {Quat(Vector3(0, 0, 1), (sensorId == 0) ? (IMU_ROTATION) : (SECOND_IMU_ROTATION))};
 }
 
 uint8_t Sensor::getSensorState() {
@@ -59,6 +59,8 @@ const char * getIMUNameByType(int imuType) {
     switch(imuType) {
         case IMU_MPU9250:
             return "MPU9250";
+        case IMU_MPU9250K:
+            return "MPU9250K";
         case IMU_MPU6500:
             return "MPU6500";
         case IMU_BNO080:

@@ -29,4 +29,6 @@
 void mahonyQuaternionUpdate(float q[4], float ax, float ay, float az, float gx, float gy, float gz, float deltat);
 void mahonyQuaternionUpdate(float q[4], float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float mz, float deltat);
 
+void MahonyAHRSupdate(float *q, float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float mz, float deltat);
+
 #endif /* _MAHONY_H_ */

@@ -33,6 +33,8 @@
 #include "ledmgr.h"
 #include "batterymonitor.h"
 
+#include "udplogger.h"
+
 SensorFactory sensors {};
 int sensorToCalibrate = -1;
 bool blinking = false;
@@ -43,6 +45,7 @@ BatteryMonitor battery;
 
 void setup()
 {
+
     //wifi_set_sleep_type(NONE_SLEEP_T);
     // Glow diode while loading
 #if ENABLE_LEDS
@@ -52,12 +55,17 @@ void setup()
     LEDManager::on(LOADING_LED);
 #endif
 
-    Serial.begin(serialBaudRate);
-    SerialCommands::setUp();
+    Network::setUp();
+    delay(500);
+    delay(500);
+    logger.print(" -=-=-=- START -=-=-=-");
+
+    //Serial.begin(serialBaudRate);
+    //SerialCommands::setUp();
     Serial.println();
     Serial.println();
     Serial.println();
-#if IMU == IMU_MPU6500 || IMU == IMU_MPU6050 || IMU == IMU_MPU9250
+#if IMU == IMU_MPU6500 || IMU == IMU_MPU6050 || IMU == IMU_MPU9250 || IMU == IMU_MPU9250K
     I2CSCAN::clearBus(PIN_IMU_SDA, PIN_IMU_SCL); // Make sure the bus isn't suck when reseting ESP without powering it down
     // Do it only for MPU, cause reaction of BNO to this is not investigated yet
 #endif
@@ -75,7 +83,7 @@ void setup()
     sensors.create();
     sensors.motionSetup();
     
-    Network::setUp();
+
     OTA::otaSetup(otaPassword);
     battery.Setup();
     LEDManager::off(LOADING_LED);
@@ -84,8 +92,9 @@ void setup()
 
 void loop()
 {
+    //logger.print(" ping! ");
     LEDManager::ledStatusUpdate();
-    SerialCommands::update();
+    //SerialCommands::update();
     OTA::otaUpdate();
     Network::update(sensors.getFirst(), sensors.getSecond());
 #ifndef UPDATE_IMU_UNCONNECTED
@@ -125,4 +134,5 @@ void loop()
     }
     loopTime = micros();
 #endif
+//delay(10);
 }

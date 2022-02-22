@@ -25,6 +25,7 @@
 
 // List of constants used in other places
 #define IMU_MPU9250 1
+#define IMU_MPU9250K 91
 #define IMU_MPU6500 2
 #define IMU_BNO080 3
 #define IMU_BNO085 4
@@ -60,7 +61,7 @@
 #define DEG_270 PI / 2
 
 #ifndef LED_BUILTIN
-#define LED_BUILTIN 2
+#define LED_BUILTIN 1
 #endif
 
 #ifdef ESP8266

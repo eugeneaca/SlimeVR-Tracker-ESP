@@ -25,6 +25,7 @@
 #define SLIMEVR_CONFIG_H_
 
 struct CalibrationConfig {
+    /*
     //accel offsets and correction matrix
     float A_B[3];
     float A_Ainv[3][3];
@@ -35,6 +36,9 @@ struct CalibrationConfig {
     float G_off[3];
     // calibration temperature for dynamic compensation
     float temperature;
+    */
+   float gyroBias[3];
+   float magBias[3];
 };
 
 struct DeviceConfig {

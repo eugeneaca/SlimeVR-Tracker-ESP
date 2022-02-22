@@ -42,14 +42,16 @@
 #define ENABLE_LEDS true
 
 #define LOADING_LED LED_BUILTIN
-#define CALIBRATING_LED LED_BUILTIN
+#define CALIBRATING_LED 3
 #define STATUS_LED LED_BUILTIN
 
 // Determines how often we sample and send data
-#define samplingRateInMillis 10
+//#define samplingRateInMillis 10
+#define samplingRateInMillis 30
 
 // Sleeping options
-#define POWERSAVING_MODE POWER_SAVING_MINIMUM
+//#define POWERSAVING_MODE POWER_SAVING_MINIMUM
+#define POWERSAVING_MODE POWER_SAVING_NONE
 #if POWERSAVING_MODE >= POWER_SAVING_MINIMUM
     #define TARGET_LOOPTIME_MICROS (samplingRateInMillis * 1000)
 #endif

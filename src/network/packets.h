@@ -66,6 +66,7 @@ namespace Network {
     // PACKET_RAW_CALIBRATION_DATA 6
     void sendRawCalibrationData(float* vector, uint8_t calibrationType, uint8_t sensorId);
     void sendRawCalibrationData(int* vector, uint8_t calibrationType, uint8_t sensorId);
+    void sendRawCalibrationData(float x, float y, float z, uint8_t calibrationType, uint8_t sensorId);
 
     // PACKET_CALIBRATION_FINISHED 7
     void sendCalibrationFinished(uint8_t calibrationType, uint8_t sensorId);

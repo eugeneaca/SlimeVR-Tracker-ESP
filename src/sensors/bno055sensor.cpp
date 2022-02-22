@@ -25,6 +25,11 @@
 #include "globals.h"
 #include "ledmgr.h"
 
+#include "quaternion.h"
+#include "udplogger.h"
+#define Serial logger
+#define println print
+
 void BNO055Sensor::motionSetup() {
     imu = Adafruit_BNO055(sensorId, addr);
     delay(3000);
@@ -49,8 +54,24 @@ void BNO055Sensor::motionSetup() {
 void BNO055Sensor::motionLoop() {
     // TODO Optimize a bit with setting rawQuat directly
     Quat quat = imu.getQuat();
+    quat.normalize();
     quaternion.set(quat.x, quat.y, quat.z, quat.w);
-    quaternion *= sensorOffset;
+    
+
+    //Serial.printf("\t\t\t\t\t\t{%x} quat : w %-1.2f  x %-1.2f  y %-1.2f  z %-1.2f\n", addr, quaternion.w, quaternion.x, quaternion.y, quaternion.z );
+
+    quaternion *= sensorOffset;  // ??
+    // Quat rot = {Quat(Vector3(1, 0, 0), DEG_90 )};
+    // quaternion *= rot;
+
+    /*{
+        quaternion::Quaternion<float> qq(quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+        qq = quaternion::normalize(qq);
+        std::array<float, 3> eul = quaternion::to_euler<float>(qq, 1e-6f);
+        const float DEG = 180.00f / 3.1415f;
+        Serial.printf("\t\t\t\t\t{%x} euler : %-03d %-03d %-03d\n", addr, int(eul[0] * DEG), int(eul[1] * DEG), int(eul[2] * DEG));
+    }*/
+
     if(!OPTIMIZE_UPDATES || !lastQuatSent.equalsWithEpsilon(quaternion)) {
         newData = true;
         lastQuatSent = quaternion;

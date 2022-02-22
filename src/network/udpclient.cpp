@@ -187,6 +187,26 @@ void Network::sendRawCalibrationData(float* vector, uint8_t calibrationType, uin
     }
 }
 
+// PACKET_RAW_CALIBRATION_DATA 6
+void Network::sendRawCalibrationData(float x, float y, float z, uint8_t calibrationType, uint8_t sensorId)
+{
+#ifndef SEND_UPDATES_UNCONNECTED
+    if (!connected)
+        return; // mpu9250sensor.cpp  startCalibration()
+#endif
+    if (DataTransfer::beginPacket())
+    {
+        DataTransfer::sendPacketType(PACKET_RAW_CALIBRATION_DATA);
+        DataTransfer::sendPacketNumber();
+        DataTransfer::sendByte(sensorId);
+        DataTransfer::sendInt(calibrationType);
+        DataTransfer::sendFloat(x);
+        DataTransfer::sendFloat(y);
+        DataTransfer::sendFloat(z);
+        DataTransfer::endPacket();
+    }
+}
+
 void Network::sendRawCalibrationData(int* vector, uint8_t calibrationType, uint8_t sensorId) {
     #ifndef SEND_UPDATES_UNCONNECTED
     if(!connected) return;   // function not used?
